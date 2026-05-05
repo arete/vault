@@ -1,0 +1,6 @@
+# Puoi variare la versione (es. 1-1.80-bookworm) in base alle tue esigenze
+FROM mcr.microsoft.com/devcontainers/rust:2.0-bullseye
+
+# [Opzionale] Installa dipendenze di sistema aggiuntive
+# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends <tue-librerie>

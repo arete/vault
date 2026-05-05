@@ -1,0 +1,27 @@
+# --- Build Artifacts ---
+# Cartella dove Cargo salva i binari e gli oggetti compilati
+/target/
+
+# --- IDE & Editors ---
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# JetBrains (IntelliJ, RustRover)
+.idea/
+
+# --- Backup & Temp ---
+*.bak
+*.swp
+*~
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Development Environment ---
+# Se usi variabili d'ambiente locali
+.env

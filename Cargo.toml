@@ -1,0 +1,47 @@
+[package]
+name = "myvault"
+version = "1.0.0"
+edition = "2021"
+
+[[bin]]
+name = "myvault"
+path = "src/main.rs"
+
+[dependencies]
+# Cifratura
+aes-gcm = { version = "0.10", features = ["std"] }
+argon2 = "0.5"
+rand = { version = "0.10.1", features = ["std", "std_rng"] }
+
+# Zeroizzazione memoria
+zeroize = { version = "1.7", features = ["derive"] }
+
+# Serializzazione
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0.149"
+base64 = "0.22"
+hex = "0.4"
+
+# HTTP server
+axum = { version = "0.8.9", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+tower = "0.5.3"
+tower-http = { version = "0.6.8", features = ["trace"] }
+
+# Logging strutturato
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Errori
+thiserror = "2.0.18"
+anyhow = "1"
+
+# Config da env
+dotenvy = "0.15"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

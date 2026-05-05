@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  vault:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vault-service:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"   # Esponi solo su loopback; metti un reverse proxy davanti
+    environment:
+      # ⚠️  In produzione usa Docker Secrets o un secret manager (Vault, AWS SSM, ecc.)
+      # Mai hardcodare la password qui — usare sempre un .env non committato
+      VAULT_MASTER_PASSWORD: ${VAULT_MASTER_PASSWORD}
+      VAULT_BIND_ADDR: "0.0.0.0:8080"
+      RUST_LOG: "vault_service=info,tower_http=warn"
+    # Limiti risorse (Argon2 usa ~64MB di RAM per derivazione)
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "1.0"
+    # Filesystem read-only tranne /tmp
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

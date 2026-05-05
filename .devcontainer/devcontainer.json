@@ -1,0 +1,28 @@
+{
+    "name": "Rust Development",
+    "build": {
+        "dockerfile": "Containerfile"
+    },
+    // Configurazioni specifiche per VS Code
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "tamasfe.even-better-toml",
+                "serayuzgur.crates",
+                "vadimcn.vscode-lldb"
+            ]
+        }
+    },
+    // Esegue il forwarding di porte se il tuo progetto è un server web
+    "forwardPorts": [
+        8080
+    ],
+    // Imposta l'utente non-root per sicurezza
+    "remoteUser": "vscode",
+    // Ottimizzazione: monta un volume separato per la cartella target 
+    // Questo velocizza enormemente la compilazione su Windows/macOS
+    "mounts": [
+        "source=${localWorkspaceFolderBasename}-target,target=${containerWorkspaceFolder}/target,type=volume"
+    ]
+}
